@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonomous Research Agent | Gemini + Tavily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css?v=4">
+  <!-- Marked.js for markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="hero-header">
+      <div class="badge">
+        <span class="pulse-dot"></span>
+        <span>Google Gemini &amp; Tavily Powered</span>
+      </div>
+      <h1 class="hero-title">Tool-Using <span class="gradient-text">Research Agent</span></h1>
+      <p class="hero-subtitle">
+        Autonomous multi-tool intelligence with hard step limiting, real-world source verification, and strict citation traceability.
+      </p>
+    </header>
+
+    <!-- Query Control Card -->
+    <section class="card input-card">
+      <form id="research-form" class="search-form">
+        <div class="input-wrapper">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="query-input" 
+            placeholder="Ask a complex research question (e.g. DeepSeek-R1 architecture &amp; RL training)..." 
+            required 
+            autocomplete="off"
+          />
+          <button type="submit" id="submit-btn" class="btn btn-primary">
+            <span>Investigate</span>
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Suggestion Chips -->
+        <div class="controls-row">
+          <div class="chips-container">
+            <span class="chips-label">Try:</span>
+            <button type="button" class="chip" data-query="What are the key architectural improvements in DeepSeek-R1 reasoning models?">DeepSeek-R1</button>
+            <button type="button" class="chip" data-query="How does FlashAttention optimize memory I/O on modern GPUs?">FlashAttention</button>
+            <button type="button" class="chip" data-query="Latest breakthroughs in Quantum Error Correction in 2025">Quantum Error Correction</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Real-time Agent Progress Dashboard -->
+    <section id="progress-section" class="card progress-card hidden">
+      <div class="card-header">
+        <div class="header-left">
+          <div class="spinner"></div>
+          <h2 class="card-title">Autonomous Execution Trace</h2>
+        </div>
+        <div id="step-badge" class="step-indicator">Iteration 0 of 2</div>
+      </div>
+      <div id="timeline" class="timeline"></div>
+    </section>
+
+    <!-- Structured Synthesis Result Section -->
+    <section id="result-section" class="card result-card hidden">
+      <div class="card-header">
+        <div class="header-left">
+          <span class="header-icon">📑</span>
+          <h2 class="card-title">Structured Research Report</h2>
+        </div>
+        <div class="header-actions">
+          <div id="audit-badge" class="badge-audit">100% Verified Citations</div>
+          <button id="copy-report-btn" class="btn btn-secondary btn-sm" title="Copy Markdown to Clipboard">
+            <span>Copy Report</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Report Metadata Strip -->
+      <div class="meta-strip">
+        <div class="meta-item">
+          <span class="meta-label">LLM Engine:</span>
+          <span class="meta-val">Gemini 3.5 Flash</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Grounding:</span>
+          <span class="meta-val" id="meta-sources-count">0 Sources</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Integrity Status:</span>
+          <span class="meta-val text-emerald" id="meta-status">Audit Passed</span>
+        </div>
+      </div>
+      
+      <!-- Structured Markdown Body -->
+      <div id="report-content" class="report-content markdown-body"></div>
+
+      <!-- Prominent Resources & Citations Section -->
+      <div class="resources-container">
+        <div class="resources-header">
+          <div class="header-left">
+            <span class="header-icon">📚</span>
+            <h3 class="resources-heading">Verified Real-World Resources &amp; Citations</h3>
+          </div>
+          <span class="resources-count-badge" id="resources-pill">0 Sources</span>
+        </div>
+        <p class="resources-subtitle">Every factual claim above is mapped directly to one of the following verified external URLs:</p>
+
+        <!-- Grid of Structured Resource Cards -->
+        <div id="resources-grid" class="resources-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/app.js?v=4"></script>
+</body>
+</html>
